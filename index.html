@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mahé (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+<head>
+  <title>Presentation</title>
+
+  <meta charset='utf-8'>
+  <script
+  src='slides.js'></script>
+</head>
+
+
+
+<body style='display: none'>
+
+  <section class='slides layout-regular template-io2011'>
+
+      <!-- Your slides (<article>s) go here. Delete or comment out the
+      slides below. -->
+
+
+      
+      <article class='biglogo'>
+      </article>
+
+
+<article>
+  <h1>
+    Introduction to GIT
+  </h1>
+  <div class="author">
+    Omair Sajid
+  </div>
+  <p/>
+  <code>
+    This work is a derivate of <a href="https://git-scm.com/book/en/v2">Pro Git book</a> by  Scott Chacon and Ben Straub and published by Apress. All content is licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution Non Commercial Share Alike 3.0 license.</a>
+  </code>
+</article>
+
+
+<article >
+  <h3>
+    Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+  </h3>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+    Everything is local
+  </h3>
+  <p>
+    <ul>
+      <li>Everything is fast
+      <li>Every clone is a backup
+      <li>work offline. No network needed for<br/>
+        <ul>
+          <li>Performing a diff
+          <li>Viewing file history
+          <li>Committing changes
+          <li>Merging branches
+          <li>Switching branches
+        </ul>
+    </ul>
+</article>
+
+
+<article id="setup">
+  <h2>
+    Setup
+  </h2>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Config
+  </h3>
+  <p>
+    User 'git config' to set/get config properties.
+    <ul>
+      <li><i class='blue'>/etc/gitconfig file:</i> Contains values for every user on the system and all their repositories.
+        <pre><code>git config --system</code></pre></li>
+      <li><i class='blue'>~/.gitconfig file:</i> Specific to your user.
+        <pre><code>git config --global</code></pre></li>
+      </li>
+      <li><i class='blue'>.git/config file:</i> Specific to whatever repository you’re currently using. Also default file used if scope is not spedicifed
+        <pre><code>git config</code></pre></li>
+      </li>
+    </ul>
+  </p>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Config (initial setup)
+  </h3>
+    <ul>
+      <li><i class='blue'>Your identity</i>
+        <pre><code>
+  $ git config --global user.name "John Doe"
+  $ git config --global user.email "johndoe@example.com"
+        </code></pre>
+      </li>
+      <li><i class='blue'>Your editor</i>
+        <pre><code>
+  $ git config --global core.editor emacs
+        </code></pre>
+      </li>          
+      <li><i class='blue'>Your difftool</i>
+        <pre><code>
+  $ git config --global merge.tool vimdiff
+        </code></pre>
+      </li>          
+    </ul>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Config (Check your settigns)
+  </h3>
+    <ul>
+      <li>List all settings
+        <pre><code>
+  $ git config --list
+  user.name=Omair Sajid
+  user.email=omair.sajid@confiz.com
+  color.status=auto
+  color.branch=auto
+  color.interactive=auto
+  color.diff=auto
+  ...
+        </code></pre>
+      </li>
+      <li>Or for a particular key only
+        <pre><code>
+  $ git config user.name
+  Omair Sajid
+        </code></pre>
+      </li>          
+    </ul>
+</article>
+
+      <article class='smaller'>
+        <h3>
+          Getting help
+        </h3>
+          <ul>
+            <li>Getting help
+              <pre><code>
+  $ git help <verb>
+  $ git &lt;verb&gt; --help
+  $ man git-&lt;verb&gt;
+              </code></pre>
+            </li>
+            <li>E.g. to get help for the config command
+              <pre><code>
+  $ git help config
+                </code></pre>
+            </li>          </ul>
+      </article>   
+
+      <article class='smaller'>
+        <h3>
+          Getting a git repository (Excersie 1)
+        </h3>
+          <ul>
+            <li>Initializing a Repository in an Existing Directory
+              <pre><code>
+  $ git init
+  $ git add README
+  $ git commit -m 'initial project version'
+              </code></pre>
+            </li>
+            <li>Cloning an Existing Repository
+              <pre><code>
+  $ git clone git://github.com/schacon/grit.git
+  $ git clone git://github.com/schacon/grit.git mygrit
+                </code></pre>
+            </li>          </ul>
+      </article>   
+
+<article>
+  <h2>
+    Recording Changes to the Repository
+  </h2>
+</article>
+
+<article class='smaller'>
+  <h3>
+    The Three stages
+  </h3>
+  <p>
+    A git project has three main sections. Git directory, the working directory, and the staging area.
+    <img  class='centered' class='centered' style='height: 500px' src='images/three-stages.png'>
+  </p>
+</article>
+
+
+<article>
+  <img  class='centered' class='centered' style='height: 500px' src='images/file-lifecycle.png'>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+    Checking the Status of Your Files
+  </h3>
+  <ul>
+    <li>
+      The main tool you use to determine which files are in which state is the git status command
+      <pre><code>
+  $ git status
+  # On branch master
+  nothing to commit (working directory clean)
+      </code></pre>            
+    </li>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+   Adding new files (1)
+  </h3>
+  <ul>
+    <li>
+      Let’s say you add a new file to your project, a simple README file. 
+      <pre><code>
+  $ vim README
+  $ git status
+  # On branch master
+  # Untracked files:
+  #   (use "git add &lt;file&gt;..." to include in what will be committed)
+  #
+  #   README
+  nothing added to commit but untracked files present (use "git add" to track)
+      </code></pre>            
+    </li>
+    <li>
+      In order to begin tracking a new file, you use the command git add
+      <pre><code>
+  $ git add README
+      </code></pre>   
+    </li>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Adding new files (2)
+  </h3>
+  <ul>
+    <li>
+      If we run git status again
+      <pre><code>
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD &lt;file&gt;..." to unstage)
+  #
+  #   new file:   README
+  #
+      </code></pre>   
+    </li>          
+</article>
+
+<article class='smaller'>
+  <h3>
+    Staging Modified files (1)
+  </h3>
+  <ul>
+    <li>
+      Modify an existing tracked file (e.g. benchmarks.rb) and run git status
+      <pre><code>
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD &lt;file&gt;..." to unstage)
+  #
+  #   new file:   README
+  #
+  # Changed but not updated:
+  #   (use "git add &lt;file&gt;..." to update what will be committed)
+  #
+  #   modified:   benchmarks.rb
+  #
+      </code></pre>   
+    </li>          
+</article>
+
+<article class='smaller'>
+  <h3>
+    Staging Modified files (2)
+  </h3>
+  <ul>
+    <li>
+      To stage let's do 'git add' and run 'git status'
+      <pre><code>
+  $ git add benchmarks.rb
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD &lt;file&gt;..." to unstage)
+  #
+  #   new file:   README
+  #   modified:   benchmarks.rb
+  #
+      </code></pre>   
+    </li>          
+</article>
+
+<article class='smaller'>
+  <h3>
+    Staging Modified files (3)
+  </h3>
+  <ul>
+    <li>
+      Let's modify <i>benchmarks.rb</i> again and run 'git status'
+      <pre><code>
+  $ vim benchmarks.rb
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD &lt;file&gt;..." to unstage)
+  #
+  #   new file:   README
+  #   modified:   benchmarks.rb
+  #
+  # Changed but not updated:
+  #   (use "git add &lt;file&gt;..." to update what will be committed)
+  #
+  #   modified:   benchmarks.rb
+  #
+      </code></pre>   
+  <b>Now <i>benchmarks.rb</i> is listed as both <span class='red'>staged</span> and <span class='red'>unstaged</span></b>
+    </li>          
+</article>
+
+<article class='smaller'>
+  <h3>
+    Staging Modified files (4)
+  </h3>
+  <ul>
+    <li>
+      Run git add again to stage the latest version of the file
+      <pre><code>
+  $ git add benchmarks.rb
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #   new file:   README
+  #   modified:   benchmarks.rb
+  #
+      </code></pre>   
+    </li>          
+</article>
+
+
+
+<article class='smaller'>
+  <h3>
+    Viewing Your Staged and Unstaged Changes (1)
+  </h3>
+  <ul>
+    <li>
+      To see what you’ve changed but not yet staged, type git diff with no other arguments:
+      <pre><code>
+  $ git diff
+  diff --git a/benchmarks.rb b/benchmarks.rb
+  index 3cb747f..da65585 100644
+  --- a/benchmarks.rb
+  +++ b/benchmarks.rb
+  @@ -36,6 +36,10 @@ def main
+             @commit.parents[0].parents[0].parents[0]
+           end
+
+  +        run_code(x, 'commits 1') do
+  +          git.commits.size
+  +        end
+  +
+           run_code(x, 'commits 2') do
+             log = git.commits('master', 15)
+             log.size
+      </code></pre>   
+    </li>          
+  </ul>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Viewing Your Staged and Unstaged Changes (2)
+  </h3>
+  <ul>
+    <li>
+      This compare your staged changes to your last commit (or use git diff --staged for git version &gt; 1.6.1)
+      <pre><code>
+  $ git diff --cached
+  diff --git a/README b/README
+  new file mode 100644
+  index 0000000..03902a1
+  --- /dev/null
+  +++ b/README2
+  @@ -0,0 +1,5 @@
+  +grit
+  + by Tom Preston-Werner, Chris Wanstrath
+  + http://github.com/mojombo/grit
+  +
+  +Grit is a Ruby library for extracting information from a Git repository
+      </code></pre>   
+    </li>          
+  </ul>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Committing Your Changes (1)
+  </h3>
+  <ul>
+    <li>
+      To commit your changes use 'git commit'. Remember that whatever has been staged (using git add) will be committed.
+      <pre><code>
+  $ git commit
+      </code></pre>   
+    </li>
+    <li>
+      This will launch editor you configured during setup and will ask for comment. 
+      <pre><code>
+  # Please enter the commit message for your changes. Lines starting
+  # with '#' will be ignored, and an empty message aborts the commit.
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD &lt;file&gt;..." to unstage)
+  #
+  #       new file:   README
+  #       modified:   benchmarks.rb
+  ~
+  ~
+  ".git/COMMIT_EDITMSG" 10L, 283C
+      </code></pre>
+    </li>          
+  </ul>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Committing Your Changes (2)
+  </h3>
+  <ul>
+    <li>
+      A sample commit message is given below
+      <pre><code>
+  This is header
+
+  Commit message should have a subject (first line) a blank line and then details.
+  This way different tools can generate better nofications. E.g. if an email 
+  notificaiton is gerneated then first line will used as subject of email and rest as
+  email body. 
+  You should also refer your jira/redmine task in comment. E.g. Fixes Ticket #1234. 
+  This will automatically (if configured )add a comment to your jira/redmine task referencing this commit.
+
+  # Please enter the commit message for your changes. Lines starting
+  # with '#' will be ignored, and an empty message aborts the commit.
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD &lt;file&gt;..." to unstage)
+  #
+  #       new file:   README
+  #       modified:   benchmarks.rb
+  ~
+  ~
+  ".git/COMMIT_EDITMSG" 10L, 283C
+      </code></pre>
+    </li>          
+  </ul>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Committing Your Changes (3) - Exercise 2
+  </h3>
+  <ul>
+    <li>
+      Or you can type your commit message inline with the commit command by specifying it after a -m flag
+      <pre><code>
+  $ git commit -m "Story #182: Fix benchmarks for speed"
+  [master]: created 463dc4f: "Fix benchmarks for speed"
+    2 files changed, 3 insertions(+), 0 deletions(-)
+    create mode 100644 README
+      </code></pre>
+    </li>          
+  </ul>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Undoing Things (1)
+  </h3>
+  <ul>
+    <li>
+      <span class='blue'>Unstaging a Staged File:</span> Use this when you have accidentally <i>staged</i> a file and want to move it back to <i>modified</i> state
+      <pre><code>
+  $ git reset HEAD benchmarks.rb
+  benchmarks.rb: locally modified
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       modified:   README.txt
+  #
+  # Changed but not updated:
+  #   (use "git add <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #       modified:   benchmarks.rb
+      </code></pre>
+    </li>          
+  </ul>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+    Undoing Things (2)
+  </h3>
+  <ul>
+    <li>
+      <span class='blue'>Unmodifying a Modified File:</span> Use this when you want to revert your file to last commit.
+      <pre><code>
+  $ git checkout -- benchmarks.rb
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       modified:   README.txt
+  #
+      </code></pre>
+    </li>          
+  </ul>
+</article>
+
+<article>
+  <h2>
+    Working with Remotes
+  </h2>
+</article>
+
+<article>
+  <h3>
+    Working with Remotes (1)
+  </h3>
+  <p>
+    <ul>
+      <li>Remote repositories are versions of your project that are hosted on the Internet or network somewhere.</li>
+      <li>You can have several of them, each of which generally is either read-only or read/write for you</li>
+      <li>Collaborating with others involves managing these remote repositories and pushing and pulling data to and from them when you need to share work.</li>
+      <li>
+    </ul>
+  </p>
+</article>
+
+<article>
+  <h3>
+    Working with Remotes (2) - Exercise 3
+  </h3>
+  <p>
+    Listing remotes<pre><code>$ git remote</code></pre>
+    Adding  remotes<pre><code>$ git remote add &lt;name&gt; &lt;path-to-repo&gt;</code></pre>
+    Deleting remotes<pre><code>$ git remote rm &lt;path-to-repo&gt;</code></pre>
+  </p>
+</article>
+
+
+<article>
+  <h2>
+    Git Branching
+  </h2>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (1)
+  </h3>
+  <p>Conceptually, a single commit looks something like.</p><br>
+  <img class='centered' class='centered' src='images/branching/single-commit.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (2)
+  </h3>
+  <p>After couple of commits.</p><br>
+  <img  class='centered' src='images/branching/three-commits.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (3)
+  </h3>
+  <p>A branch is simple a pointer to one of these commits.</p><br>
+  <img  class='centered' src='images/branching/three-commits-master.png'/>
+  <p>A branch in Git is in actuality a simple file that contains the 40 character SHA-1 checksum of the commit it points to, branches are cheap to create and destroy. Creating a new branch is as quick and simple as writing 41 bytes to a file (40 characters and a newline).</p>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (4)
+  </h3>
+  <p>Creating a new branch creates a new pointer at the same commit you're currently on.</p><br>
+  <pre><code>$ git branch<span class='str'> testing </span></code></pre>
+  <img  class='centered' src='images/branching/three-commits-master-testing.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (5)
+  </h3>
+  <p>To keep track of branch we are currently on. Git uses a special pointer called <span class='red'>HEAD</span> <i>(The <span class='green'>git branch</span> command only created a new branch — it didn’t switch to that branch ) </i></p><br>
+  <img  class='centered' src='images/branching/three-commits-head.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (6)
+  </h3>
+  <p>To switch to an existing branch, you run the <span class='green'>git checkout</span> command</i></p><br>
+  <pre><code>$ git checkout<span class='str'> testing </span></code></pre>
+  <img  class='centered' src='images/branching/three-commits-head-2.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (7)
+  </h3>
+  <p>Let's do a commit
+  <pre><code> $ vim test.rb
+ $ git commit -a -m <span class='str'>'made a change'</span></code></pre>
+  <img  class='centered' src='images/branching/commit-1.png'/>
+  <p>
+  Notice that only testing branch (pointer) has move forward. But master branch still points to the commit you were on when you ran git checkout to switch branches. 
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (8)
+  </h3>
+  <p>Now switching to master branch will move the <span class='red'>HEAD</span> pointer to master branch, and will revert files in working directory to the snapshot master poitns to.
+  <pre><code>$ git checkout <span class='str'>master</span></code></pre>
+  <img  class='centered' src='images/branching/commit-2.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Git Branching (9) - Exercise 4
+  </h3>
+  <p>Doing another commit now will move master branch forward
+  <pre><code>$ vim test.rb 
+$ git add test.rb 
+$ git commit -m "...."</code></pre>
+  <img  class='centered' src='images/branching/commit-3.png'/>
+</article>
+
+<article class='smaller'>
+  <h2>
+    Merging
+  </h2>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+    Merging (1)
+  </h3>
+  <p>Consider a repository with three branches as in figure below
+    <br/><br/><br/>
+  <img  class='centered' src='images/merging/merge-001.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Merging (2)
+  </h3>
+  <p><span class='blue'>Fast Forward Merge: </span>Let's first merge <span class='green'>hotfix</span> into <span class='green'>master</span>
+  <pre><code>$ git checkout master
+$ git merge hotfix
+Updating f42c576..3a0874c
+<b>Fast forward</b>
+README |    1 -
+1 files changed, 0 insertions(+), 1 deletions(-)</code></pre>
+ <img  class='centered' src='images/merging/merge-002.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Merging (3)
+  </h3>
+  <p>As <span class='green'>hotfix</span> branch is merged into <span class='green'>master</span> so we will get rid of <span class='green'>hotfix</span> branch now
+  <pre><code>$ git branch -d hotfix
+Deleted branch hotfix (3a0874c).</code></pre>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+    Merging (4) 
+  </h3>
+  <p>Continue work on <span class='green'>iss53</span> branch
+  <pre><code>$ git checkout iss53
+Switched to branch "iss53"
+$ vim index.html
+$ git commit -a -m ’finished the new footer [issue 53]’
+[iss53]: created ad82d7a: "finished the new footer [issue 53]"
+ 1 files changed, 1 insertions(+), 0 deletions(-)</code></pre>
+ <img  class='centered' src='images/merging/merge-003.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Merging (5)
+  </h3>
+  <p><span class='blue'>Three-way merge: </span> Time to merge <span class='green'>iss53</span> into <span class='green'>master</span>
+  <pre><code>$ git checkout master
+[master *]$ git merge iss53
+Merge made by <b>recursive</b>.
+ README |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)</code></pre>
+ <img  class='centered' src='images/merging/merge-005.png'/>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Merging (6) - Exercise 5
+  </h3>
+  <p>Git automatically identifies the best common-ancestor merge base for branch merging. It then creates a new snapshot by doing a three-way merge and automatically creates a new commit that points to it. This is referred to as a merge commit and is special in that it has more than one parent.
+  
+ <img  class='centered' src='images/merging/merge-004.png'/>
+</article>
+
+
+<article class='smaller'>
+  <h2>
+    Merge Conflicts
+  </h2>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+    Merge Conflicts (1)
+  </h3>
+  <p>Occasionally, this process doesn’t go smoothly. Git will not always be able to merge files cleanly. E.g. If our fix for issue #53 modified the same part of a file as the hotfix, we’ll get a merge conflict that looks something like this:
+  <pre><code>$ git merge iss53
+<span class='nocode'>Auto-merging</span> index.html
+CONFLICT (content): <span class='nocode'>Merge conflict in index.html</span><br/>
+<span class='nocode'>Automatic merge failed; fix conflicts and then commit the result.</span></code></pre>
+ <p>Running git status now will show us somthing like
+  <pre><code>[master*]$ git status
+index.html: needs <span class='nocode'>merge</span>
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+# <b>unmerged:   index.html</b></code></pre>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Merge Conflicts (2)
+  </h3>
+  <p>We can now open the file and resolve conflicts. File with conflicts will contain section that will look something like
+  
+  <pre><code><b>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:index.html</b>
+&lt;div id="footer"&gt;contact : email.support@github.com&lt;/div&gt;
+<b>=======</b>
+&lt;div id="footer"&gt;
+  please contact us at support@github.com
+&lt;/div&gt;
+<b>>>>>>>> ss53:index.html</b></code></pre>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+    Merge Conflicts (3)
+  </h3>
+  <p>How we resolve conflict is upsto us. We can choese either side or merge the contents from both. E.g. in this case we can resolve conflict as 
+  <pre><code>
+&lt;div id="footer"&gt;
+  please contact us at email.support@github.com
+&lt;/div&gt;
+</code></pre>
+<p>
+After resolving conflict use <span class='blue'>git add</span> to add file to staging area and then commit code to complete merge prcess.
+</article>
+
+<article class='smaller'>
+  <h2>
+    Managing Branches
+  </h2>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Managing Branches (1)
+  </h3>
+<p>To create new branch
+  <pre><code>$ git branch testing
+$ git checkout testing</code></pre>  
+<p>Or use shortcut to create and switch to new branch with one command
+<pre><code>$ git checkout -b testing</code></pre>
+  <p>To list branches (* indicates current branch)
+  <pre><code>$ git branch
+  iss53
+* master
+  testing
+</code></pre>
+<p>To delete a branch
+<pre><code>$ git branch -d hotfix
+Deleted branch hotfix (3a0874c).</code></pre>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Managing Branches (2)
+  </h3>
+<p>To view list of branches that have been merged into current branch. Branches without * have already been merged into current branch and can be safely deleted.
+  <pre><code>$ git branch --merged
+  iss53
+* master</code></pre>  
+<p>To see all the branches that contain work you haven’t yet merged in
+<pre><code>$ git branch --no-merged
+  testing</code></pre>
+<p>Trying to delete this branch will give error. In case you want to force deletion then use <span class='red'>-D</span> instead of <span class='red'>-d</span>
+<pre><code>$ git branch -d testing<br/>
+<span class='nocode'>error: The branch ’testing’ is not an ancestor of your current HEAD.</span></code></pre>
+</article>
+
+
+<article class='smaller'>
+  <h3>
+    Managing Branches (3)
+  </h3>
+<p>To push branch to remote server. (<i>This will push local <span class='green'>serverfix</span> and create a new <span class='green'>serverfix</span> branch on remote server.</i>)
+  <pre><code>$ git push origin serverfix:serverfix
+Counting objects: 20, done.
+Compressing objects: 100% (14/14), done.
+Writing objects: 100% (15/15), 1.74 KiB, done.
+Total 15 (delta 5), reused 0 (delta 0)
+To git@github.com:schacon/simplegit.git
+ * [new branch]      serverfix -> serverfix</code></pre> 
+<p>To push branch with a different name (<i>This will push local <span class='green'>serverfix</span> branch as remote <span class='green'>newname</span> branch</i>)
+<pre><code>$ git push origin serverfix:newname</code></pre>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Managing Branches (4)
+  </h3>
+<p>Pulling a new branch from server is two step process. <ul>
+<li>First you need to get latest infomration from origin with <span class='blue'>git fetch</span>, this will create a new read only pointer to <span class='green'>origin/serverfix</span> which we can not modify. 
+<li>To create a local <span class='green'>serverfix</span> branch we need to create a new branch based on <span class='green'>origin/serverfix</span>
+</ul>
+  <pre><code>$ git fetch origin
+remote: Counting objects: 20, done.
+remote: Compressing objects: 100% (14/14), done.
+remote: Total 15 (delta 5), reused 0 (delta 0)
+Unpacking objects: 100% (15/15), done.
+From git@github.com:schacon/simplegit
+ * [new branch]      serverfix    -> origin/serverfix
+
+$ git checkout -b serverfix origin/serverfix
+Branch serverfix set up to track remote branch refs/remotes/origin/serverfix.
+Switched to a new branch "serverfix"</code></pre> 
+</article>
+
+<article class='smaller'>
+  <h3>
+    Managing Branches (5) - Exercise 6
+  </h3>
+<p>To delete a remote branch. <ul>
+<li>First you need to get latest infomration from origin with <span class='blue'>git fetch</span>, this will create a new read only pointer to <span class='green'>origin/serverfix</span> which we can not modify. 
+<li>To create a local <span class='green'>serverfix</span> branch we need to create a new branch based on <span class='green'>origin/serverfix</span>
+</ul>
+  <pre><code>$ git push origin :serverfix
+To git@github.com:schacon/simplegit.git
+ - [deleted]         serverfix</code></pre> 
+ <p> Recall that to create new branch we used <span class='blue'>git push [remotename] [localbranch]:[remotebranch]</span>. For deleting remote branch we are leaving out local branch name. This is similar to saying take nothing from local repo and push to remote.
+</article>
+
+
+<article class='smaller'>
+  <h2>
+    Tagging
+  </h2>
+</article>
+
+<article class='smaller'>
+  <h3>
+    Tagging (1)
+  </h3>
+<p>Tags are simple pointers to commits, and they are incredibly useful for bookmarking important revisions like releases. The git tag command can be used to create a new tag
+  <pre><code>$ git tag -a v1.0 -m "Stable release"</code></pre> 
+ <p> and to list existing tags use
+  <pre><code>$ git tag</code></pre> 
+</article>
+
+<article class='smaller'>
+<h3>
+  Tagging (2)
+</h3>
+<p>Git also lets you use git checkout with tags and commit IDs, but doing so puts you in a <span class='blue'>detached HEAD</span> state. This means that you’re not on a branch anymore—you’re directly viewing a commit. This means that you’ll lose all your work as soon as you switch back to a real branch. To create a new branch in a detached HEAD state:
+<pre><code>$ git checkout -b &lt;new-branch-name&gt;</code></pre>
+<p>After this we will have a new branch reference pointing to formerly <span class='blue'>detached HEAD</span>
+</article>
+
+
+<article class='smaller'>
+<h3>Some of the topics not covered</h3>
+<ul>
+  <li>Rebasing
+  <li>git archive
+  <li>Ancestry References
+  <li>Commit Ranges
+  <li>Interactive Staging
+  <li>Staging patches
+  <li>Stashing
+  <li>Interactiv rebasing
+    <ul>
+      <li>Reordering commits
+      <li>Squashing Commits
+    </ul>
+  <li>filter-branch
+  <li>blame
+  <li>bisect
+  <li>submodules
+  <li>hooks
+
+</ul>
+
+</article>
+
+<article>
+  <h1>
+    Branching Strategy
+  </h1>
+  <p>
+    <ul>
+      <li><a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a>
+      <li><a href="http://danielkummer.github.io/git-flow-cheatsheet/">Git Flow</a>
+    </ul>
+  </p>
+</article>
+
+<article>
+  <h1>
+    Thank you!
+  </h1>
+</article>
+
+</section>
+
+</body>
+</html>
